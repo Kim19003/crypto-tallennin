@@ -1,0 +1,2 @@
+directoryPath = null
+dateTime = 27.12.2020
