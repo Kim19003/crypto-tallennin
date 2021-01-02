@@ -13,6 +13,8 @@ namespace Bitcoin_Sovellus
 {
     public partial class Form : System.Windows.Forms.Form
     {
+        public const string appName = "Bitcoin Tallennin";
+
         public Form()
         {
             InitializeComponent();
@@ -70,36 +72,38 @@ namespace Bitcoin_Sovellus
 
         private void ostettuNappula_Click(object sender, EventArgs e)
         {
-            DialogResult varmistus = MessageBox.Show("Oletko varma, että OSTAT bitcoineja?", "Ostatko?", MessageBoxButtons.YesNo);
+            DialogResult varmistus = MessageBox.Show("Oletko varma, että OSTIT bitcoineja?", appName, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (varmistus == DialogResult.Yes)
             {
-            string teksti = tekstiLaatikko.Text; // Lue tekstilaatikon teksti ja lisää se muuttujaan
+                string teksti = tekstiLaatikko.Text; // Lue tekstilaatikon teksti ja lisää se muuttujaan
 
-            string fileLocation = tiedostonSijainti; // Tallennettavan tiedoston sijainti
+                string fileLocation = tiedostonSijainti; // Tallennettavan tiedoston sijainti
 
-            DateTime date = DateTime.Now; // Määritä tämänhetkinen aika
+                DateTime date = DateTime.Now; // Määritä tämänhetkinen aika
 
-            List<string> lines = new List<string>(); // Uuden listan luominen
-            lines = File.ReadAllLines(fileLocation).ToList(); // Lue koko tiedosto ja lisää se listaan
+                List<string> lines = new List<string>(); // Uuden listan luominen
+                lines = File.ReadAllLines(fileLocation).ToList(); // Lue koko tiedosto ja lisää se listaan
 
-            lines.Add("Ostettu [" + date.ToString("dd/MM/yyyy") + "]: " + teksti + "€\n"); // Lisää listaan "Ostettu [_AIKA_]: _EUROMÄÄRÄ_€"
-            File.WriteAllLines(fileLocation, lines); // Päivitä tiedosto listan sisällöllä
+                lines.Add("Ostettu [" + date.ToString("dd/MM/yyyy") + "]: " + teksti + "€\n"); // Lisää listaan "Ostettu [_AIKA_]: _EUROMÄÄRÄ_€"
+                File.WriteAllLines(fileLocation, lines); // Päivitä tiedosto listan sisällöllä
 
-                // Päivitä config-tiedostoon aika, jolloin tallennus tehtiin
-                formConfig = formMainFolder + @"\config.txt";
+                    // Päivitä config-tiedostoon aika, jolloin tallennus tehtiin
+                    formConfig = formMainFolder + @"\config.txt";
 
-                List<string> lines2 = new List<string>(); // Uuden listan luominen
-                lines2 = File.ReadAllLines(formConfig).ToList(); // Lue koko tiedosto ja lisää se listaan
+                    List<string> lines2 = new List<string>(); // Uuden listan luominen
+                    lines2 = File.ReadAllLines(formConfig).ToList(); // Lue koko tiedosto ja lisää se listaan
 
-                lines2[1] = "dateTime = " + date.ToString("dd/MM/yyyy");
-                File.WriteAllLines(formConfig, lines2); // Päivitä tiedosto listan sisällöllä
+                    lines2[1] = "dateTime = " + date.ToString("dd/MM/yyyy");
+                    File.WriteAllLines(formConfig, lines2); // Päivitä tiedosto listan sisällöllä
+
+                MessageBox.Show("Osto onnistui!", appName, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
         private void myytyNappula_Click(object sender, EventArgs e)
         {
-            DialogResult varmistus = MessageBox.Show("Oletko varma, että MYYT bitcoineja?", "Myytkö?", MessageBoxButtons.YesNo);
+            DialogResult varmistus = MessageBox.Show("Oletko varma, että MYIT bitcoineja?", appName, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (varmistus == DialogResult.Yes)
             {
@@ -123,6 +127,8 @@ namespace Bitcoin_Sovellus
 
                     lines2[1] = "dateTime = " + date.ToString("dd/MM/yyyy");
                     File.WriteAllLines(formConfig, lines2); // Päivitä tiedosto listan sisällöllä
+
+                MessageBox.Show("Myynti onnistui!", appName, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 

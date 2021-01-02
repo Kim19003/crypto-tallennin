@@ -44,6 +44,7 @@ namespace Bitcoin_Sovellus
             this.paivaMaaraDownLabel = new System.Windows.Forms.Label();
             this.kaytitViimeksiUpLabel = new System.Windows.Forms.Label();
             this.kaytitViimeksiDownLabel = new System.Windows.Forms.Label();
+            this.versionLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.bitcoinLogo)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -205,11 +206,21 @@ namespace Bitcoin_Sovellus
             this.kaytitViimeksiDownLabel.TabIndex = 11;
             this.kaytitViimeksiDownLabel.Text = "(päivämäärä)";
             // 
+            // versionLabel
+            // 
+            this.versionLabel.AutoSize = true;
+            this.versionLabel.Location = new System.Drawing.Point(483, 363);
+            this.versionLabel.Name = "versionLabel";
+            this.versionLabel.Size = new System.Drawing.Size(49, 13);
+            this.versionLabel.TabIndex = 12;
+            this.versionLabel.Text = "ver. 1.01";
+            // 
             // Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(544, 385);
+            this.Controls.Add(this.versionLabel);
             this.Controls.Add(this.kaytitViimeksiDownLabel);
             this.Controls.Add(this.kaytitViimeksiUpLabel);
             this.Controls.Add(this.paivaMaaraDownLabel);
@@ -252,6 +263,7 @@ namespace Bitcoin_Sovellus
         private System.Windows.Forms.Label paivaMaaraDownLabel;
         private System.Windows.Forms.Label kaytitViimeksiUpLabel;
         private System.Windows.Forms.Label kaytitViimeksiDownLabel;
+        private System.Windows.Forms.Label versionLabel;
     }
 }
 

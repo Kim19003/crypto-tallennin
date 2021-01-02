@@ -1,2 +1,2 @@
-directoryPath = null
-dateTime = 27.12.2020
+directoryPath = C:\Users\Grill\OneDrive\bitcoin-tapahtumat.txt
+dateTime = 02.01.2021
