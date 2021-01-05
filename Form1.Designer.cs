@@ -45,6 +45,7 @@ namespace Bitcoin_Sovellus
             this.kaytitViimeksiUpLabel = new System.Windows.Forms.Label();
             this.kaytitViimeksiDownLabel = new System.Windows.Forms.Label();
             this.versionLabel = new System.Windows.Forms.Label();
+            this.avaaTiedostoButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.bitcoinLogo)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -162,7 +163,7 @@ namespace Bitcoin_Sovellus
             this.vaihdaSijaintiButton.Size = new System.Drawing.Size(109, 23);
             this.vaihdaSijaintiButton.TabIndex = 7;
             this.vaihdaSijaintiButton.TabStop = false;
-            this.vaihdaSijaintiButton.Text = "Vaihda tiedosto?";
+            this.vaihdaSijaintiButton.Text = "Vaihda tiedosto";
             this.vaihdaSijaintiButton.UseVisualStyleBackColor = true;
             this.vaihdaSijaintiButton.Click += new System.EventHandler(this.vaihdaSijaintiButton_Click);
             // 
@@ -194,7 +195,7 @@ namespace Bitcoin_Sovellus
             this.kaytitViimeksiUpLabel.Name = "kaytitViimeksiUpLabel";
             this.kaytitViimeksiUpLabel.Size = new System.Drawing.Size(159, 16);
             this.kaytitViimeksiUpLabel.TabIndex = 10;
-            this.kaytitViimeksiUpLabel.Text = "Käytit sovellusta viimeksi:";
+            this.kaytitViimeksiUpLabel.Text = "Teit tapahtuman viimeksi:";
             // 
             // kaytitViimeksiDownLabel
             // 
@@ -213,13 +214,25 @@ namespace Bitcoin_Sovellus
             this.versionLabel.Name = "versionLabel";
             this.versionLabel.Size = new System.Drawing.Size(49, 13);
             this.versionLabel.TabIndex = 12;
-            this.versionLabel.Text = "ver. 1.01";
+            this.versionLabel.Text = "ver. 1.02";
+            // 
+            // avaaTiedostoButton
+            // 
+            this.avaaTiedostoButton.Location = new System.Drawing.Point(146, 313);
+            this.avaaTiedostoButton.Name = "avaaTiedostoButton";
+            this.avaaTiedostoButton.Size = new System.Drawing.Size(109, 23);
+            this.avaaTiedostoButton.TabIndex = 13;
+            this.avaaTiedostoButton.TabStop = false;
+            this.avaaTiedostoButton.Text = "Avaa tiedosto";
+            this.avaaTiedostoButton.UseVisualStyleBackColor = true;
+            this.avaaTiedostoButton.Click += new System.EventHandler(this.avaaTiedostoButton_Click);
             // 
             // Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(544, 385);
+            this.Controls.Add(this.avaaTiedostoButton);
             this.Controls.Add(this.versionLabel);
             this.Controls.Add(this.kaytitViimeksiDownLabel);
             this.Controls.Add(this.kaytitViimeksiUpLabel);
@@ -264,6 +277,7 @@ namespace Bitcoin_Sovellus
         private System.Windows.Forms.Label kaytitViimeksiUpLabel;
         private System.Windows.Forms.Label kaytitViimeksiDownLabel;
         private System.Windows.Forms.Label versionLabel;
+        private System.Windows.Forms.Button avaaTiedostoButton;
     }
 }
 

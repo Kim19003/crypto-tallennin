@@ -34,36 +34,7 @@ namespace Bitcoin_Sovellus
 
         private void Form_Load(object sender, EventArgs e)
         {
-            formConfig = formMainFolder + @"\config.txt";
-
-            List<string> lines = new List<string>(); // Uuden listan luominen
-            lines = File.ReadAllLines(formConfig).ToList(); // Lue koko tiedosto ja lisää se listaan
-
-            // Lue directory path
-            if (lines[0] == "directoryPath = null")
-            {
-                directoryPath = null;
-                tiedostonSijainti = @"D:\stuff\fileread\bitcoin.txt"; // Myynti- ja ostotietojen normaali tallennussijainti
-            }
-            else if (lines[0].Contains("directoryPath ="))
-            {
-                string lines0 = lines[0];
-                directoryPath = lines0.Substring(16);
-                tiedostonSijainti = directoryPath;
-            }
-
-            tiedostonSijaintiLabel.Text = tiedostonSijainti;
-
-            // Lue date time
-            if (lines[1] == "dateTime = null")
-            {
-                kaytitViimeksiDownLabel.Text = "";
-            }
-            else if (lines[1].Contains("dateTime ="))
-            {
-                string lines1 = lines[1];
-                kaytitViimeksiDownLabel.Text = lines1.Substring(11);
-            }
+            lataaConfig();
 
             // Ilmoita päivämäärä
             DateTime date = DateTime.Now;
@@ -72,7 +43,7 @@ namespace Bitcoin_Sovellus
 
         private void ostettuNappula_Click(object sender, EventArgs e)
         {
-            DialogResult varmistus = MessageBox.Show("Oletko varma, että OSTIT bitcoineja?", appName, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult varmistus = MessageBox.Show("Oletko varma, että ostit bitcoineja?", appName, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (varmistus == DialogResult.Yes)
             {
@@ -103,7 +74,7 @@ namespace Bitcoin_Sovellus
 
         private void myytyNappula_Click(object sender, EventArgs e)
         {
-            DialogResult varmistus = MessageBox.Show("Oletko varma, että MYIT bitcoineja?", appName, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult varmistus = MessageBox.Show("Oletko varma, että myit bitcoineja?", appName, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (varmistus == DialogResult.Yes)
             {
@@ -132,6 +103,7 @@ namespace Bitcoin_Sovellus
             }
         }
 
+        // Salli vain numeroita tekstilaatikon syötteeksi
         private void tekstiLaatikko_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
@@ -189,6 +161,57 @@ namespace Bitcoin_Sovellus
             }
 
             tiedostonSijaintiLabel.Text = tiedostonSijainti;
+        }
+
+        private void avaaTiedostoButton_Click(object sender, EventArgs e)
+        {
+            if (tiedostonSijainti != null)
+            {
+                try
+                {
+                    System.Diagnostics.Process.Start(tiedostonSijainti); // Avaa tiedosto
+                    //System.Diagnostics.Process.Start("0"); // Kokeile virheilmoitusta
+                }
+                catch
+                {
+                    MessageBox.Show("Tiedoston avaaminen epäonnistui.\nVarmista, että tiedoston polku on oikea.", appName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        // Lataa tiedot config-tiedostosta
+        private void lataaConfig()
+        {
+            formConfig = formMainFolder + @"\config.txt";
+
+            List<string> lines = new List<string>(); // Uuden listan luominen
+            lines = File.ReadAllLines(formConfig).ToList(); // Lue koko tiedosto ja lisää se listaan
+
+            // Lue directory path
+            if (lines[0] == "directoryPath = null")
+            {
+                directoryPath = null;
+                tiedostonSijainti = @"D:\stuff\fileread\bitcoin.txt"; // Myynti- ja ostotietojen normaali tallennussijainti
+            }
+            else if (lines[0].Contains("directoryPath ="))
+            {
+                string lines0 = lines[0];
+                directoryPath = lines0.Substring(16);
+                tiedostonSijainti = directoryPath;
+            }
+
+            tiedostonSijaintiLabel.Text = tiedostonSijainti;
+
+            // Lue date time
+            if (lines[1] == "dateTime = null")
+            {
+                kaytitViimeksiDownLabel.Text = "";
+            }
+            else if (lines[1].Contains("dateTime ="))
+            {
+                string lines1 = lines[1];
+                kaytitViimeksiDownLabel.Text = lines1.Substring(11);
+            }
         }
     }
 }
