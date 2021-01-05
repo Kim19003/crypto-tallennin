@@ -142,9 +142,9 @@ namespace Bitcoin_Sovellus
             this.myyntiSijaintiLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.myyntiSijaintiLabel.Location = new System.Drawing.Point(28, 266);
             this.myyntiSijaintiLabel.Name = "myyntiSijaintiLabel";
-            this.myyntiSijaintiLabel.Size = new System.Drawing.Size(232, 16);
+            this.myyntiSijaintiLabel.Size = new System.Drawing.Size(306, 16);
             this.myyntiSijaintiLabel.TabIndex = 5;
-            this.myyntiSijaintiLabel.Text = "Tiedosto myynti- ja ostotietoja varten: ";
+            this.myyntiSijaintiLabel.Text = "Tiedosto myynti- ja ostotietojen tallennusta varten: ";
             // 
             // tiedostonSijaintiLabel
             // 
