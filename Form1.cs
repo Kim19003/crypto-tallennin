@@ -119,7 +119,7 @@ namespace Bitcoin_Sovellus
 
         private void vaihdaSijaintiButton_Click(object sender, EventArgs e)
         {
-            SaveFileDialog fileDialog = new SaveFileDialog();
+            OpenFileDialog fileDialog = new OpenFileDialog();
             fileDialog.FileName = "Bitcoin-tapahtumani.txt";
             fileDialog.Filter = "Text files (*.txt)|*.txt";
             fileDialog.RestoreDirectory = true;

@@ -18,3 +18,13 @@ C:\Users\Grill\Documents\GitHub\bitcoin-tallennin\obj\Debug\Bitcoin Sovellus.csp
 C:\Users\Grill\Documents\GitHub\bitcoin-tallennin\obj\Debug\Bitcoin Sovellus.csproj.CoreCompileInputs.cache
 C:\Users\Grill\Documents\GitHub\bitcoin-tallennin\obj\Debug\Bitcoin Sovellus.exe
 C:\Users\Grill\Documents\GitHub\bitcoin-tallennin\obj\Debug\Bitcoin Sovellus.pdb
+C:\Users\Kim Järvinen\Documents\GitHub\bitcoin-tallennin\bin\Debug\Bitcoin Sovellus.exe.config
+C:\Users\Kim Järvinen\Documents\GitHub\bitcoin-tallennin\bin\Debug\Bitcoin Sovellus.exe
+C:\Users\Kim Järvinen\Documents\GitHub\bitcoin-tallennin\bin\Debug\Bitcoin Sovellus.pdb
+C:\Users\Kim Järvinen\Documents\GitHub\bitcoin-tallennin\obj\Debug\Bitcoin Sovellus.csprojAssemblyReference.cache
+C:\Users\Kim Järvinen\Documents\GitHub\bitcoin-tallennin\obj\Debug\Bitcoin_Sovellus.Form.resources
+C:\Users\Kim Järvinen\Documents\GitHub\bitcoin-tallennin\obj\Debug\Bitcoin_Sovellus.Properties.Resources.resources
+C:\Users\Kim Järvinen\Documents\GitHub\bitcoin-tallennin\obj\Debug\Bitcoin Sovellus.csproj.GenerateResource.cache
+C:\Users\Kim Järvinen\Documents\GitHub\bitcoin-tallennin\obj\Debug\Bitcoin Sovellus.csproj.CoreCompileInputs.cache
+C:\Users\Kim Järvinen\Documents\GitHub\bitcoin-tallennin\obj\Debug\Bitcoin Sovellus.exe
+C:\Users\Kim Järvinen\Documents\GitHub\bitcoin-tallennin\obj\Debug\Bitcoin Sovellus.pdb
