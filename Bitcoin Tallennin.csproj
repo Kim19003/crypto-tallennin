@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{2FF2EFD3-5718-4497-AD82-F540529D8BD3}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>Bitcoin_Sovellus</RootNamespace>
-    <AssemblyName>Bitcoin Sovellus</AssemblyName>
+    <RootNamespace>Bitcoin_Tallennin</RootNamespace>
+    <AssemblyName>Bitcoin Tallennin</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -83,6 +83,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

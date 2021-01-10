@@ -34,10 +34,93 @@ namespace Bitcoin_Sovellus
 
         private void Form_Load(object sender, EventArgs e)
         {
-            lataaConfig();
+            string path = formMainFolder + @"\config.txt";
 
-            // Ilmoita päivämäärä
-            DateTime date = DateTime.Now;
+            if (File.Exists(path)) // Tarkista löytyykö käyttäjältä config-tiedosto
+            {
+                List<string> lines = new List<string>();
+                lines = File.ReadAllLines(path).ToList();
+
+                if (lines.Count > 0 && lines.Count < 3)
+                { 
+                    if (lines.Count == 2)
+                    {
+                        if (lines[0].Contains("directoryPath =") && lines[1].Contains("dateTime ="))
+                        {
+                            lataaConfig();
+                        }
+                        else
+                        {
+                            lines.Clear();
+                            lines.Add("directoryPath = null");
+                            lines.Add("dateTime = null");
+                            File.WriteAllLines(path, lines); // Päivitä tiedosto listan sisällöllä
+                            MessageBox.Show("Config-tiedosto resetoitiin, koska se ei toiminut kunnolla.", appName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                    }
+                    else
+                    {
+                        lines.Clear();
+                        lines.Add("directoryPath = null");
+                        lines.Add("dateTime = null");
+                        File.WriteAllLines(path, lines); // Päivitä tiedosto listan sisällöllä
+                        MessageBox.Show("Config-tiedosto resetoitiin, koska se ei toiminut kunnolla.", appName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+                else
+                {
+                    if (lines.Count > 2)
+                    {
+                        if (lines[0].Contains("directoryPath =") && lines[1].Contains("dateTime ="))
+                        {
+                            for (int i = 2; i < lines.Count; i++)
+                            {
+                                lines.RemoveAt(i);
+                            }
+                        }
+                        else
+                        {
+                            lines.Clear();
+                            lines.Add("directoryPath = null");
+                            lines.Add("dateTime = null");
+                            File.WriteAllLines(path, lines); // Päivitä tiedosto listan sisällöllä
+                            MessageBox.Show("Config-tiedosto resetoitiin, koska se ei toiminut kunnolla.", appName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                    }
+                    else
+                    {
+                        lines.Clear();
+                        lines.Add("directoryPath = null");
+                        lines.Add("dateTime = null");
+                        File.WriteAllLines(path, lines); // Päivitä tiedosto listan sisällöllä
+                        MessageBox.Show("Config-tiedosto resetoitiin, koska se ei toiminut kunnolla.", appName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+            }
+            else
+            { 
+                if (MessageBox.Show("Config-tiedostoa ei löydy.\nLuodaanko uusi config-tiedosto?", appName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    File.Create(path).Close();
+
+                    List<string> lines = new List<string>(); // Uuden listan luominen
+                    lines = File.ReadAllLines(path).ToList(); // Lue koko tiedosto ja lisää se listaan
+
+                    lines.Add("directoryPath = null");
+                    lines.Add("dateTime = null");
+                    File.WriteAllLines(path, lines); // Päivitä tiedosto listan sisällöllä
+                }
+                else
+                {
+                    if (MessageBox.Show("Config-tiedosto on välttämätön ohjelman toimivuuden kannalta.\nSuljetaan ohjelma...", appName, MessageBoxButtons.OK, MessageBoxIcon.Error) == DialogResult.OK)
+                    {
+                        Application.Exit();
+                    }
+                }
+            }
+
+        // Ilmoita päivämäärä
+        DateTime date = DateTime.Now;
             paivaMaaraDownLabel.Text = date.ToString("dd/MM/yyyy");
         }
 
@@ -184,33 +267,39 @@ namespace Bitcoin_Sovellus
         {
             formConfig = formMainFolder + @"\config.txt";
 
-            List<string> lines = new List<string>(); // Uuden listan luominen
-            lines = File.ReadAllLines(formConfig).ToList(); // Lue koko tiedosto ja lisää se listaan
+            if (File.Exists(formConfig)) // Tarkista löytyykö käyttäjältä config-tiedosto
+            {
+                List<string> lines = new List<string>(); // Uuden listan luominen
+                lines = File.ReadAllLines(formConfig).ToList(); // Lue koko tiedosto ja lisää se listaan
 
-            // Lue directory path
-            if (lines[0] == "directoryPath = null")
-            {
-                directoryPath = null;
-                tiedostonSijainti = @"D:\stuff\fileread\bitcoin.txt"; // Myynti- ja ostotietojen normaali tallennussijainti
-            }
-            else if (lines[0].Contains("directoryPath ="))
-            {
-                string lines0 = lines[0];
-                directoryPath = lines0.Substring(16);
-                tiedostonSijainti = directoryPath;
-            }
+                if (lines.Count > 0)
+                {
+                    // Lue directory path
+                    if (lines[0] == "directoryPath = null")
+                    {
+                        directoryPath = null;
+                        tiedostonSijainti = @"D:\stuff\fileread\bitcoin.txt"; // Myynti- ja ostotietojen normaali tallennussijainti
+                    }
+                    else if (lines[0].Contains("directoryPath ="))
+                    {
+                        string lines0 = lines[0];
+                        directoryPath = lines0.Substring(16);
+                        tiedostonSijainti = directoryPath;
+                    }
 
-            tiedostonSijaintiLabel.Text = tiedostonSijainti;
+                    tiedostonSijaintiLabel.Text = tiedostonSijainti;
 
-            // Lue date time
-            if (lines[1] == "dateTime = null")
-            {
-                kaytitViimeksiDownLabel.Text = "";
-            }
-            else if (lines[1].Contains("dateTime ="))
-            {
-                string lines1 = lines[1];
-                kaytitViimeksiDownLabel.Text = lines1.Substring(11);
+                    // Lue date time
+                    if (lines[1] == "dateTime = null")
+                    {
+                        kaytitViimeksiDownLabel.Text = "";
+                    }
+                    else if (lines[1].Contains("dateTime ="))
+                    {
+                        string lines1 = lines[1];
+                        kaytitViimeksiDownLabel.Text = lines1.Substring(11);
+                    }
+                }
             }
         }
     }

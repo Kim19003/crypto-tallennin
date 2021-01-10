@@ -1,0 +1,10 @@
+C:\Users\Grill\Documents\GitHub\bitcoin-tallennin\bin\Debug\Bitcoin Tallennin.exe.config
+C:\Users\Grill\Documents\GitHub\bitcoin-tallennin\bin\Debug\Bitcoin Tallennin.exe
+C:\Users\Grill\Documents\GitHub\bitcoin-tallennin\bin\Debug\Bitcoin Tallennin.pdb
+C:\Users\Grill\Documents\GitHub\bitcoin-tallennin\obj\Debug\Bitcoin_Sovellus.Form.resources
+C:\Users\Grill\Documents\GitHub\bitcoin-tallennin\obj\Debug\Bitcoin_Tallennin.Properties.Resources.resources
+C:\Users\Grill\Documents\GitHub\bitcoin-tallennin\obj\Debug\Bitcoin Tallennin.csproj.GenerateResource.cache
+C:\Users\Grill\Documents\GitHub\bitcoin-tallennin\obj\Debug\Bitcoin Tallennin.csproj.CoreCompileInputs.cache
+C:\Users\Grill\Documents\GitHub\bitcoin-tallennin\obj\Debug\Bitcoin Tallennin.exe
+C:\Users\Grill\Documents\GitHub\bitcoin-tallennin\obj\Debug\Bitcoin Tallennin.pdb
+C:\Users\Grill\Documents\GitHub\bitcoin-tallennin\obj\Debug\Bitcoin Tallennin.csprojAssemblyReference.cache
