@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Bitcoin_Tallennin;
 using System.IO;
 
 namespace Bitcoin_Sovellus
@@ -14,6 +15,7 @@ namespace Bitcoin_Sovellus
     public partial class Form : System.Windows.Forms.Form
     {
         public const string appName = "Bitcoin Tallennin";
+        public const string appCreator = "Kim19003";
 
         public Form()
         {
@@ -122,6 +124,10 @@ namespace Bitcoin_Sovellus
         // Ilmoita päivämäärä
         DateTime date = DateTime.Now;
             paivaMaaraDownLabel.Text = date.ToString("dd/MM/yyyy");
+
+        // Aja pienohjelmat
+        bitcoinApi();
+        viimeisinTapahtuma();
         }
 
         private void ostettuNappula_Click(object sender, EventArgs e)
@@ -300,6 +306,54 @@ namespace Bitcoin_Sovellus
                         kaytitViimeksiDownLabel.Text = lines1.Substring(11);
                     }
                 }
+            }
+        }
+
+        // Lue viimeisin tapahtuma käyttäjän tekstitiedostosta
+        void viimeisinTapahtuma()
+        {
+            List<string> lines = new List<string>(); // Uuden listan luominen
+
+            try
+            {
+                lines = File.ReadAllLines(tiedostonSijainti).ToList(); // Lue koko tiedosto ja lisää se listaan
+
+                if (lines.Count > 0)
+                {
+                    string last = lines[lines.Count - 2];
+                    viimeisinTapahtumasiRightLabel.Text = last;
+                }
+            }
+            catch (Exception error)
+            {
+                //Console.WriteLine(error);
+            }
+        }
+
+        // Bitcoin API
+        void bitcoinApi()
+        {
+            string response, value;
+
+            try
+            {
+                API api = new API();
+
+                response = api.Response();
+
+                int i = response.IndexOf("&euro;\",\"rate\":");
+
+                value = response.Substring(i);
+                value = value.Substring(16, 6);
+
+                bitcoininHintaDownLabel.Text = (value.ToString() + "€");
+                apiVirheLabel.Text = "";
+            }
+            catch (Exception error)
+            {
+                bitcoininHintaDownLabel.Text = "(bitcoinin arvo)";
+                apiVirheLabel.Text = "Bitcoinin arvoa ei voida hakea.";
+                //Console.WriteLine(error);
             }
         }
     }
