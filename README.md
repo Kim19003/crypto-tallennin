@@ -1,6 +1,5 @@
 # Crypto Tallennin
-<br>
-<br>
+
 Planned upcoming changes:
 - ?
 
