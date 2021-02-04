@@ -14,7 +14,7 @@ namespace Bitcoin_Sovellus
 {
     public partial class Form : System.Windows.Forms.Form
     {
-        public const string appName = "Bitcoin Tallennin";
+        public const string appName = "Crypto Tallennin";
         public const string appCreator = "Kim19003";
 
         public Form()
@@ -121,22 +121,24 @@ namespace Bitcoin_Sovellus
                 }
             }
 
-        // Ilmoita päivämäärä
-        DateTime date = DateTime.Now;
-            paivaMaaraDownLabel.Text = date.ToString("dd/MM/yyyy");
+            // Ilmoita päivämäärä
+            DateTime date = DateTime.Now;
+                paivaMaaraDownLabel.Text = date.ToString("dd/MM/yyyy");
 
-        // Aja pienohjelmat
-        bitcoinApi();
-        viimeisinTapahtuma();
+            // Aja pienohjelmat
+            bitcoinApi();
+            viimeisinTapahtuma();
         }
 
         private void ostettuNappula_Click(object sender, EventArgs e)
         {
-            DialogResult varmistus = MessageBox.Show("Oletko varma, että ostit bitcoineja?", appName, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult varmistus = MessageBox.Show("Oletko varma, että teit ostotapahtuman?", appName, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (varmistus == DialogResult.Yes)
             {
                 string teksti = tekstiLaatikko.Text; // Lue tekstilaatikon teksti ja lisää se muuttujaan
+                string rahaValuutta = rahaValuuttaBox.Text;
+                string cryptoValuutta = cryptoValuuttaBox.Text;
 
                 string fileLocation = tiedostonSijainti; // Tallennettavan tiedoston sijainti
 
@@ -145,7 +147,7 @@ namespace Bitcoin_Sovellus
                 List<string> lines = new List<string>(); // Uuden listan luominen
                 lines = File.ReadAllLines(fileLocation).ToList(); // Lue koko tiedosto ja lisää se listaan
 
-                lines.Add("Ostettu [" + date.ToString("dd/MM/yyyy") + "]: " + teksti + "€\n"); // Lisää listaan "Ostettu [_AIKA_]: _EUROMÄÄRÄ_€"
+                lines.Add("Ostettu [" + date.ToString("dd/MM/yyyy") + "] (" + cryptoValuutta + "): " + teksti + rahaValuutta + "\n"); // Lisää listaan "Ostettu [_AIKA_] (_CRYPTOVALUUTTA_): _EUROMÄÄRÄ__RAHAVALUUTTA_"
                 File.WriteAllLines(fileLocation, lines); // Päivitä tiedosto listan sisällöllä
 
                     // Päivitä config-tiedostoon aika, jolloin tallennus tehtiin
@@ -163,11 +165,13 @@ namespace Bitcoin_Sovellus
 
         private void myytyNappula_Click(object sender, EventArgs e)
         {
-            DialogResult varmistus = MessageBox.Show("Oletko varma, että myit bitcoineja?", appName, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult varmistus = MessageBox.Show("Oletko varma, että teit myyntitapahtuman?", appName, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (varmistus == DialogResult.Yes)
             {
                 string teksti = tekstiLaatikko.Text; // Lue tekstilaatikon teksti ja lisää se muuttujaan
+                string rahaValuutta = rahaValuuttaBox.Text;
+                string cryptoValuutta = cryptoValuuttaBox.Text;
 
                 string fileLocation = tiedostonSijainti; // Tallennettavan tiedoston sijainti
 
@@ -176,7 +180,7 @@ namespace Bitcoin_Sovellus
                 List<string> lines = new List<string>(); // Uuden listan luominen
                 lines = File.ReadAllLines(fileLocation).ToList(); // Lue koko tiedosto ja lisää se listaan
 
-                lines.Add("Myyty [" + date.ToString("dd/MM/yyyy") + "]: " + teksti + "€\n"); // Lisää listaan "Myyty [_AIKA_]: _EUROMÄÄRÄ_€"
+                lines.Add("Myyty [" + date.ToString("dd/MM/yyyy") + "] (" + cryptoValuutta + "): " + teksti + rahaValuutta + "\n"); // Lisää listaan "Myyty [_AIKA_] (_CRYPTOVALUUTTA_): _EUROMÄÄRÄ__RAHAVALUUTTA_"
                 File.WriteAllLines(fileLocation, lines); // Päivitä tiedosto listan sisällöllä
 
                     // Päivitä config-tiedostoon aika, jolloin tallennus tehtiin
@@ -209,7 +213,7 @@ namespace Bitcoin_Sovellus
         private void vaihdaSijaintiButton_Click(object sender, EventArgs e)
         {
             OpenFileDialog fileDialog = new OpenFileDialog();
-            fileDialog.FileName = "Bitcoin-tapahtumani.txt";
+            fileDialog.FileName = "Crypto Tapahtumat.txt";
             fileDialog.Filter = "Text files (*.txt)|*.txt";
             fileDialog.RestoreDirectory = true;
 
@@ -259,7 +263,6 @@ namespace Bitcoin_Sovellus
                 try
                 {
                     System.Diagnostics.Process.Start(tiedostonSijainti); // Avaa tiedosto
-                    //System.Diagnostics.Process.Start("0"); // Kokeile virheilmoitusta
                 }
                 catch
                 {
