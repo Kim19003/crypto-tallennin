@@ -1,2 +1,2 @@
-directoryPath = 
-dateTime = 
+directoryPath =
+dateTime =
