@@ -44,7 +44,7 @@ namespace Bitcoin_Sovellus
                 lines = File.ReadAllLines(path).ToList();
 
                 if (lines.Count > 0 && lines.Count < 3)
-                { 
+                {
                     if (lines.Count == 2)
                     {
                         if (lines[0].Contains("directoryPath =") && lines[1].Contains("dateTime ="))
@@ -100,7 +100,7 @@ namespace Bitcoin_Sovellus
                 }
             }
             else
-            { 
+            {
                 if (MessageBox.Show("Config-tiedostoa ei löydy.\nLuodaanko uusi config-tiedosto?", appName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     File.Create(path).Close();
@@ -123,7 +123,7 @@ namespace Bitcoin_Sovellus
 
             // Ilmoita päivämäärä
             DateTime date = DateTime.Now;
-                paivaMaaraDownLabel.Text = date.ToString("dd/MM/yyyy");
+            paivaMaaraDownLabel.Text = date.ToString("dd/MM/yyyy");
 
             // Aja pienohjelmat
             bitcoinApi();
@@ -150,16 +150,16 @@ namespace Bitcoin_Sovellus
                 lines.Add("Ostettu [" + date.ToString("dd/MM/yyyy") + "] (" + cryptoValuutta + "): " + teksti + rahaValuutta + "\n"); // Lisää listaan "Ostettu [_AIKA_] (_CRYPTOVALUUTTA_): _EUROMÄÄRÄ__RAHAVALUUTTA_"
                 File.WriteAllLines(fileLocation, lines); // Päivitä tiedosto listan sisällöllä
 
-                    // Päivitä config-tiedostoon aika, jolloin tallennus tehtiin
-                    formConfig = formMainFolder + @"\config.txt";
+                // Päivitä config-tiedostoon aika, jolloin tallennus tehtiin
+                formConfig = formMainFolder + @"\config.txt";
 
-                    List<string> lines2 = new List<string>(); // Uuden listan luominen
-                    lines2 = File.ReadAllLines(formConfig).ToList(); // Lue koko tiedosto ja lisää se listaan
+                List<string> lines2 = new List<string>(); // Uuden listan luominen
+                lines2 = File.ReadAllLines(formConfig).ToList(); // Lue koko tiedosto ja lisää se listaan
 
-                    lines2[1] = "dateTime = " + date.ToString("dd/MM/yyyy");
-                    File.WriteAllLines(formConfig, lines2); // Päivitä tiedosto listan sisällöllä
+                lines2[1] = "dateTime = " + date.ToString("dd/MM/yyyy");
+                File.WriteAllLines(formConfig, lines2); // Päivitä tiedosto listan sisällöllä
 
-                MessageBox.Show("Osto onnistui!", appName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //MessageBox.Show("Osto onnistui!", appName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
             }
         }
 
@@ -183,16 +183,16 @@ namespace Bitcoin_Sovellus
                 lines.Add("Myyty [" + date.ToString("dd/MM/yyyy") + "] (" + cryptoValuutta + "): " + teksti + rahaValuutta + "\n"); // Lisää listaan "Myyty [_AIKA_] (_CRYPTOVALUUTTA_): _EUROMÄÄRÄ__RAHAVALUUTTA_"
                 File.WriteAllLines(fileLocation, lines); // Päivitä tiedosto listan sisällöllä
 
-                    // Päivitä config-tiedostoon aika, jolloin tallennus tehtiin
-                    formConfig = formMainFolder + @"\config.txt";
+                // Päivitä config-tiedostoon aika, jolloin tallennus tehtiin
+                formConfig = formMainFolder + @"\config.txt";
 
-                    List<string> lines2 = new List<string>(); // Uuden listan luominen
-                    lines2 = File.ReadAllLines(formConfig).ToList(); // Lue koko tiedosto ja lisää se listaan
+                List<string> lines2 = new List<string>(); // Uuden listan luominen
+                lines2 = File.ReadAllLines(formConfig).ToList(); // Lue koko tiedosto ja lisää se listaan
 
-                    lines2[1] = "dateTime = " + date.ToString("dd/MM/yyyy");
-                    File.WriteAllLines(formConfig, lines2); // Päivitä tiedosto listan sisällöllä
+                lines2[1] = "dateTime = " + date.ToString("dd/MM/yyyy");
+                File.WriteAllLines(formConfig, lines2); // Päivitä tiedosto listan sisällöllä
 
-                MessageBox.Show("Myynti onnistui!", appName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //MessageBox.Show("Myynti onnistui!", appName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
             }
         }
 
@@ -292,8 +292,15 @@ namespace Bitcoin_Sovellus
                     else if (lines[0].Contains("directoryPath ="))
                     {
                         string lines0 = lines[0];
-                        directoryPath = lines0.Substring(16);
-                        tiedostonSijainti = directoryPath;
+                        try
+                        {
+                            directoryPath = lines0.Substring(16);
+                            tiedostonSijainti = directoryPath;
+                        }
+                        catch (Exception err)
+                        {
+                            Console.WriteLine(lines0 + " >>>" + err + "<<<");
+                        }
                     }
 
                     tiedostonSijaintiLabel.Text = tiedostonSijainti;
@@ -306,7 +313,14 @@ namespace Bitcoin_Sovellus
                     else if (lines[1].Contains("dateTime ="))
                     {
                         string lines1 = lines[1];
-                        kaytitViimeksiDownLabel.Text = lines1.Substring(11);
+                        try
+                        {
+                            kaytitViimeksiDownLabel.Text = lines1.Substring(11);
+                        }
+                        catch (Exception err)
+                        {
+                            Console.WriteLine(lines1 + " >>>" + err + "<<<");
+                        }
                     }
                 }
             }
@@ -327,9 +341,9 @@ namespace Bitcoin_Sovellus
                     viimeisinTapahtumasiRightLabel.Text = last;
                 }
             }
-            catch (Exception error)
+            catch (Exception err)
             {
-                //Console.WriteLine(error);
+                Console.WriteLine(err);
             }
         }
 
@@ -352,11 +366,11 @@ namespace Bitcoin_Sovellus
                 bitcoininHintaDownLabel.Text = (value.ToString() + "€");
                 apiVirheLabel.Text = "";
             }
-            catch (Exception error)
+            catch (Exception err)
             {
                 bitcoininHintaDownLabel.Text = "(bitcoinin arvo)";
                 apiVirheLabel.Text = "Bitcoinin arvoa ei voida hakea.";
-                //Console.WriteLine(error);
+                Console.WriteLine(err);
             }
         }
     }

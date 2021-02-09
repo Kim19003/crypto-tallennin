@@ -36,6 +36,7 @@ namespace Bitcoin_Sovellus
             this.myytyNappula = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.rahaValuuttaBox = new System.Windows.Forms.ComboBox();
             this.myyntiSijaintiLabel = new System.Windows.Forms.Label();
             this.tiedostonSijaintiLabel = new System.Windows.Forms.Label();
             this.vaihdaSijaintiButton = new System.Windows.Forms.Button();
@@ -52,11 +53,10 @@ namespace Bitcoin_Sovellus
             this.viimeisinTapahtumasiLeftLabel = new System.Windows.Forms.Label();
             this.viimeisinTapahtumasiRightLabel = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.cryptoValuuttaBox = new System.Windows.Forms.ComboBox();
             this.panel5 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.cryptoValuuttaBox = new System.Windows.Forms.ComboBox();
-            this.rahaValuuttaBox = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.bitcoinLogo)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -141,6 +141,24 @@ namespace Bitcoin_Sovellus
             this.panel2.Size = new System.Drawing.Size(169, 32);
             this.panel2.TabIndex = 5;
             // 
+            // rahaValuuttaBox
+            // 
+            this.rahaValuuttaBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.rahaValuuttaBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.rahaValuuttaBox.FormattingEnabled = true;
+            this.rahaValuuttaBox.Items.AddRange(new object[] {
+            "$",
+            "€",
+            "£"});
+            this.rahaValuuttaBox.Location = new System.Drawing.Point(131, 2);
+            this.rahaValuuttaBox.MaxDropDownItems = 20;
+            this.rahaValuuttaBox.MaxLength = 1;
+            this.rahaValuuttaBox.Name = "rahaValuuttaBox";
+            this.rahaValuuttaBox.Size = new System.Drawing.Size(35, 28);
+            this.rahaValuuttaBox.TabIndex = 22;
+            this.rahaValuuttaBox.TabStop = false;
+            this.rahaValuuttaBox.Text = "$";
+            // 
             // myyntiSijaintiLabel
             // 
             this.myyntiSijaintiLabel.AutoSize = true;
@@ -220,7 +238,7 @@ namespace Bitcoin_Sovellus
             this.versionLabel.Name = "versionLabel";
             this.versionLabel.Size = new System.Drawing.Size(49, 13);
             this.versionLabel.TabIndex = 12;
-            this.versionLabel.Text = "ver. 1.00";
+            this.versionLabel.Text = "ver. 1.01";
             // 
             // avaaTiedostoButton
             // 
@@ -305,37 +323,6 @@ namespace Bitcoin_Sovellus
             this.panel4.Size = new System.Drawing.Size(75, 32);
             this.panel4.TabIndex = 5;
             // 
-            // panel5
-            // 
-            this.panel5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(66)))), ((int)(((byte)(77)))));
-            this.panel5.Controls.Add(this.panel4);
-            this.panel5.Location = new System.Drawing.Point(209, 153);
-            this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(79, 36);
-            this.panel5.TabIndex = 6;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(66)))), ((int)(((byte)(77)))));
-            this.label1.Location = new System.Drawing.Point(29, 132);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(52, 18);
-            this.label1.TabIndex = 19;
-            this.label1.Text = "Hinta:";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(66)))), ((int)(((byte)(77)))));
-            this.label2.Location = new System.Drawing.Point(208, 132);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(73, 18);
-            this.label2.TabIndex = 20;
-            this.label2.Text = "Valuutta:";
-            // 
             // cryptoValuuttaBox
             // 
             this.cryptoValuuttaBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -371,23 +358,36 @@ namespace Bitcoin_Sovellus
             this.cryptoValuuttaBox.TabStop = false;
             this.cryptoValuuttaBox.Text = "BTC";
             // 
-            // rahaValuuttaBox
+            // panel5
             // 
-            this.rahaValuuttaBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.rahaValuuttaBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.rahaValuuttaBox.FormattingEnabled = true;
-            this.rahaValuuttaBox.Items.AddRange(new object[] {
-            "$",
-            "€",
-            "£"});
-            this.rahaValuuttaBox.Location = new System.Drawing.Point(131, 2);
-            this.rahaValuuttaBox.MaxDropDownItems = 20;
-            this.rahaValuuttaBox.MaxLength = 1;
-            this.rahaValuuttaBox.Name = "rahaValuuttaBox";
-            this.rahaValuuttaBox.Size = new System.Drawing.Size(35, 28);
-            this.rahaValuuttaBox.TabIndex = 22;
-            this.rahaValuuttaBox.TabStop = false;
-            this.rahaValuuttaBox.Text = "$";
+            this.panel5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(66)))), ((int)(((byte)(77)))));
+            this.panel5.Controls.Add(this.panel4);
+            this.panel5.Location = new System.Drawing.Point(209, 153);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(79, 36);
+            this.panel5.TabIndex = 6;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(66)))), ((int)(((byte)(77)))));
+            this.label1.Location = new System.Drawing.Point(29, 132);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(52, 18);
+            this.label1.TabIndex = 19;
+            this.label1.Text = "Hinta:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(66)))), ((int)(((byte)(77)))));
+            this.label2.Location = new System.Drawing.Point(208, 132);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(73, 18);
+            this.label2.TabIndex = 20;
+            this.label2.Text = "Valuutta:";
             // 
             // Form
             // 

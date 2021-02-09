@@ -1,2 +1,2 @@
-directoryPath =
-dateTime =
+directoryPath = D:\stuff\- STUFF -\test123.txt
+dateTime = 09.02.2021

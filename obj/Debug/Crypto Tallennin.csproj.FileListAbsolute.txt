@@ -1,10 +1,10 @@
-C:\Users\Grill\Documents\GitHub\bitcoin-tallennin\bin\Debug\Crypto Tallennin.exe.config
-C:\Users\Grill\Documents\GitHub\bitcoin-tallennin\bin\Debug\Crypto Tallennin.exe
-C:\Users\Grill\Documents\GitHub\bitcoin-tallennin\bin\Debug\Crypto Tallennin.pdb
-C:\Users\Grill\Documents\GitHub\bitcoin-tallennin\obj\Debug\Bitcoin_Sovellus.Form.resources
-C:\Users\Grill\Documents\GitHub\bitcoin-tallennin\obj\Debug\Crypto_Tallennin.Properties.Resources.resources
-C:\Users\Grill\Documents\GitHub\bitcoin-tallennin\obj\Debug\Crypto Tallennin.csproj.GenerateResource.cache
-C:\Users\Grill\Documents\GitHub\bitcoin-tallennin\obj\Debug\Crypto Tallennin.csproj.CoreCompileInputs.cache
-C:\Users\Grill\Documents\GitHub\bitcoin-tallennin\obj\Debug\Crypto Tallennin.exe
-C:\Users\Grill\Documents\GitHub\bitcoin-tallennin\obj\Debug\Crypto Tallennin.pdb
-C:\Users\Grill\Documents\GitHub\bitcoin-tallennin\obj\Debug\Crypto Tallennin.csprojAssemblyReference.cache
+D:\stuff\- GITHUB -\crypto-tallennin\obj\Debug\Crypto Tallennin.csprojAssemblyReference.cache
+D:\stuff\- GITHUB -\crypto-tallennin\obj\Debug\Bitcoin_Sovellus.Form.resources
+D:\stuff\- GITHUB -\crypto-tallennin\obj\Debug\Crypto_Tallennin.Properties.Resources.resources
+D:\stuff\- GITHUB -\crypto-tallennin\obj\Debug\Crypto Tallennin.csproj.GenerateResource.cache
+D:\stuff\- GITHUB -\crypto-tallennin\obj\Debug\Crypto Tallennin.csproj.CoreCompileInputs.cache
+D:\stuff\- GITHUB -\crypto-tallennin\obj\Debug\Crypto Tallennin.pdb
+D:\stuff\- GITHUB -\crypto-tallennin\bin\Debug\Crypto Tallennin.exe.config
+D:\stuff\- GITHUB -\crypto-tallennin\bin\Debug\Crypto Tallennin.exe
+D:\stuff\- GITHUB -\crypto-tallennin\bin\Debug\Crypto Tallennin.pdb
+D:\stuff\- GITHUB -\crypto-tallennin\obj\Debug\Crypto Tallennin.exe

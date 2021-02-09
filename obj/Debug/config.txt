@@ -1,0 +1,2 @@
+directoryPath = C:\Users\Kim\OneDrive\Crypto Tapahtumat.txt
+dateTime = 09.02.2021
