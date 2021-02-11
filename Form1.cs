@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Bitcoin_Tallennin;
 using System.IO;
+using System.Media;
 
 namespace Bitcoin_Sovellus
 {
@@ -160,6 +161,7 @@ namespace Bitcoin_Sovellus
                 File.WriteAllLines(formConfig, lines2); // Päivitä tiedosto listan sisällöllä
 
                 //MessageBox.Show("Osto onnistui!", appName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                PlayCoinSound();
             }
         }
 
@@ -193,6 +195,7 @@ namespace Bitcoin_Sovellus
                 File.WriteAllLines(formConfig, lines2); // Päivitä tiedosto listan sisällöllä
 
                 //MessageBox.Show("Myynti onnistui!", appName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                PlayCoinSound();
             }
         }
 
@@ -372,6 +375,13 @@ namespace Bitcoin_Sovellus
                 apiVirheLabel.Text = "Bitcoinin arvoa ei voida hakea.";
                 Console.WriteLine(err);
             }
+        }
+
+        // Toista ääni
+        void PlayCoinSound()
+        {
+            SoundPlayer sp = new SoundPlayer(formMainFolder + @"\SuperMarioCoinSound.wav");
+            sp.Play();
         }
     }
 }

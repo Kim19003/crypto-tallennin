@@ -1,2 +1,2 @@
-directoryPath = C:\Users\Kim\OneDrive\Crypto Tapahtumat.txt
-dateTime = 09.02.2021
+directoryPath = C:\stuff\Uusi tekstiasiakirja.txt
+dateTime = 11.02.2021
