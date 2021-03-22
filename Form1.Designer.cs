@@ -96,7 +96,7 @@ namespace Bitcoin_Sovellus
             this.ostettuNappula.FlatAppearance.BorderSize = 2;
             this.ostettuNappula.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ostettuNappula.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ostettuNappula.Location = new System.Drawing.Point(29, 195);
+            this.ostettuNappula.Location = new System.Drawing.Point(30, 195);
             this.ostettuNappula.Name = "ostettuNappula";
             this.ostettuNappula.Size = new System.Drawing.Size(83, 31);
             this.ostettuNappula.TabIndex = 2;
@@ -113,7 +113,7 @@ namespace Bitcoin_Sovellus
             this.myytyNappula.FlatAppearance.BorderSize = 2;
             this.myytyNappula.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.myytyNappula.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.myytyNappula.Location = new System.Drawing.Point(119, 195);
+            this.myytyNappula.Location = new System.Drawing.Point(120, 195);
             this.myytyNappula.Name = "myytyNappula";
             this.myytyNappula.Size = new System.Drawing.Size(83, 31);
             this.myytyNappula.TabIndex = 3;
@@ -182,7 +182,7 @@ namespace Bitcoin_Sovellus
             // 
             // vaihdaSijaintiButton
             // 
-            this.vaihdaSijaintiButton.Location = new System.Drawing.Point(28, 349);
+            this.vaihdaSijaintiButton.Location = new System.Drawing.Point(30, 349);
             this.vaihdaSijaintiButton.Name = "vaihdaSijaintiButton";
             this.vaihdaSijaintiButton.Size = new System.Drawing.Size(109, 23);
             this.vaihdaSijaintiButton.TabIndex = 7;
@@ -242,7 +242,7 @@ namespace Bitcoin_Sovellus
             // 
             // avaaTiedostoButton
             // 
-            this.avaaTiedostoButton.Location = new System.Drawing.Point(143, 349);
+            this.avaaTiedostoButton.Location = new System.Drawing.Point(145, 349);
             this.avaaTiedostoButton.Name = "avaaTiedostoButton";
             this.avaaTiedostoButton.Size = new System.Drawing.Size(109, 23);
             this.avaaTiedostoButton.TabIndex = 13;
