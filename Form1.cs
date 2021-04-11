@@ -18,31 +18,26 @@ namespace Bitcoin_Sovellus
         public const string appName = "Crypto Tallennin";
         public const string appCreator = "Kim19003";
 
+        string formMainFolder = AppDomain.CurrentDomain.BaseDirectory; // Sovelluksen pääkansio
+        string configPath; // Config-tiedoston lokaatio
+        string directoryPath; // Mahdollinen vaihdettu tiedoston sijainti (-> vaihdaSijaintiButton)
+        string defaultFileLocation; // Tallennettavan tekstitiedoston oletussijainti
+        string tiedostonSijainti; // Tallennettavan tekstitiedoston muuttuva sijainti
+
         public Form()
         {
             InitializeComponent();
         }
 
-        string formMainFolder = AppDomain.CurrentDomain.BaseDirectory; // Sovelluksen pääkansio
-        string formConfig; // Sovelluksen config-tiedosto
-
-        string directoryPath; // Mahdollinen vaihdettu tiedoston sijainti (ks. vaihdaSijaintiButton)
-        string tiedostonSijainti; // Tiedoston virallinen sijainti (oletus: "D:\stuff\fileread\bitcoin.txt")
-
-        // CONFIG INIT:
-        /*
-            directoryPath = null
-            dateTime = null
-        */
-
         private void Form_Load(object sender, EventArgs e)
         {
-            string path = formMainFolder + @"\config.txt";
+            configPath = formMainFolder + @"\config.txt";
+            defaultFileLocation = @"C:\Tiedostot\Bitcoin Tapahtumat.txt";
 
-            if (File.Exists(path)) // Tarkista löytyykö käyttäjältä config-tiedosto
+            if (File.Exists(configPath)) // Tarkista löytyykö käyttäjältä config-tiedosto
             {
                 List<string> lines = new List<string>();
-                lines = File.ReadAllLines(path).ToList();
+                lines = File.ReadAllLines(configPath).ToList();
 
                 if (lines.Count > 0 && lines.Count < 3)
                 {
@@ -50,24 +45,16 @@ namespace Bitcoin_Sovellus
                     {
                         if (lines[0].Contains("directoryPath =") && lines[1].Contains("dateTime ="))
                         {
-                            lataaConfig();
+                            LataaConfig(configPath);
                         }
                         else
                         {
-                            lines.Clear();
-                            lines.Add("directoryPath = null");
-                            lines.Add("dateTime = null");
-                            File.WriteAllLines(path, lines); // Päivitä tiedosto listan sisällöllä
-                            MessageBox.Show("Config-tiedosto resetoitiin, koska se ei toiminut kunnolla.", appName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            ClearConfig(configPath, lines, true);
                         }
                     }
                     else
                     {
-                        lines.Clear();
-                        lines.Add("directoryPath = null");
-                        lines.Add("dateTime = null");
-                        File.WriteAllLines(path, lines); // Päivitä tiedosto listan sisällöllä
-                        MessageBox.Show("Config-tiedosto resetoitiin, koska se ei toiminut kunnolla.", appName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        ClearConfig(configPath, lines, true);
                     }
                 }
                 else
@@ -83,20 +70,12 @@ namespace Bitcoin_Sovellus
                         }
                         else
                         {
-                            lines.Clear();
-                            lines.Add("directoryPath = null");
-                            lines.Add("dateTime = null");
-                            File.WriteAllLines(path, lines); // Päivitä tiedosto listan sisällöllä
-                            MessageBox.Show("Config-tiedosto resetoitiin, koska se ei toiminut kunnolla.", appName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            ClearConfig(configPath, lines, true);
                         }
                     }
                     else
                     {
-                        lines.Clear();
-                        lines.Add("directoryPath = null");
-                        lines.Add("dateTime = null");
-                        File.WriteAllLines(path, lines); // Päivitä tiedosto listan sisällöllä
-                        MessageBox.Show("Config-tiedosto resetoitiin, koska se ei toiminut kunnolla.", appName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        ClearConfig(configPath, lines, true);
                     }
                 }
             }
@@ -104,14 +83,12 @@ namespace Bitcoin_Sovellus
             {
                 if (MessageBox.Show("Config-tiedostoa ei löydy.\nLuodaanko uusi config-tiedosto?", appName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
-                    File.Create(path).Close();
+                    File.Create(configPath).Close();
 
-                    List<string> lines = new List<string>(); // Uuden listan luominen
-                    lines = File.ReadAllLines(path).ToList(); // Lue koko tiedosto ja lisää se listaan
+                    List<string> lines = new List<string>();
+                    lines = File.ReadAllLines(configPath).ToList();
 
-                    lines.Add("directoryPath = null");
-                    lines.Add("dateTime = null");
-                    File.WriteAllLines(path, lines); // Päivitä tiedosto listan sisällöllä
+                    ClearConfig(configPath, lines, false);
                 }
                 else
                 {
@@ -127,8 +104,8 @@ namespace Bitcoin_Sovellus
             paivaMaaraDownLabel.Text = date.ToString("dd/MM/yyyy");
 
             // Aja pienohjelmat
-            bitcoinApi();
-            viimeisinTapahtuma();
+            HaeBitcoininHinta();
+            ViimeisinTapahtuma();
         }
 
         private void ostettuNappula_Click(object sender, EventArgs e)
@@ -137,31 +114,7 @@ namespace Bitcoin_Sovellus
 
             if (varmistus == DialogResult.Yes)
             {
-                string teksti = tekstiLaatikko.Text; // Lue tekstilaatikon teksti ja lisää se muuttujaan
-                string rahaValuutta = rahaValuuttaBox.Text;
-                string cryptoValuutta = cryptoValuuttaBox.Text;
-
-                string fileLocation = tiedostonSijainti; // Tallennettavan tiedoston sijainti
-
-                DateTime date = DateTime.Now; // Määritä tämänhetkinen aika
-
-                List<string> lines = new List<string>(); // Uuden listan luominen
-                lines = File.ReadAllLines(fileLocation).ToList(); // Lue koko tiedosto ja lisää se listaan
-
-                lines.Add("Ostettu [" + date.ToString("dd/MM/yyyy") + "] (" + cryptoValuutta + "): " + teksti + rahaValuutta + "\n"); // Lisää listaan "Ostettu [_AIKA_] (_CRYPTOVALUUTTA_): _EUROMÄÄRÄ__RAHAVALUUTTA_"
-                File.WriteAllLines(fileLocation, lines); // Päivitä tiedosto listan sisällöllä
-
-                // Päivitä config-tiedostoon aika, jolloin tallennus tehtiin
-                formConfig = formMainFolder + @"\config.txt";
-
-                List<string> lines2 = new List<string>(); // Uuden listan luominen
-                lines2 = File.ReadAllLines(formConfig).ToList(); // Lue koko tiedosto ja lisää se listaan
-
-                lines2[1] = "dateTime = " + date.ToString("dd/MM/yyyy");
-                File.WriteAllLines(formConfig, lines2); // Päivitä tiedosto listan sisällöllä
-
-                //MessageBox.Show("Osto onnistui!", appName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-                PlayCoinSound();
+                MakeABuyEvent();
             }
         }
 
@@ -171,45 +124,7 @@ namespace Bitcoin_Sovellus
 
             if (varmistus == DialogResult.Yes)
             {
-                string teksti = tekstiLaatikko.Text; // Lue tekstilaatikon teksti ja lisää se muuttujaan
-                string rahaValuutta = rahaValuuttaBox.Text;
-                string cryptoValuutta = cryptoValuuttaBox.Text;
-
-                string fileLocation = tiedostonSijainti; // Tallennettavan tiedoston sijainti
-
-                DateTime date = DateTime.Now; // Määritä tämänhetkinen aika
-
-                List<string> lines = new List<string>(); // Uuden listan luominen
-                lines = File.ReadAllLines(fileLocation).ToList(); // Lue koko tiedosto ja lisää se listaan
-
-                lines.Add("Myyty [" + date.ToString("dd/MM/yyyy") + "] (" + cryptoValuutta + "): " + teksti + rahaValuutta + "\n"); // Lisää listaan "Myyty [_AIKA_] (_CRYPTOVALUUTTA_): _EUROMÄÄRÄ__RAHAVALUUTTA_"
-                File.WriteAllLines(fileLocation, lines); // Päivitä tiedosto listan sisällöllä
-
-                // Päivitä config-tiedostoon aika, jolloin tallennus tehtiin
-                formConfig = formMainFolder + @"\config.txt";
-
-                List<string> lines2 = new List<string>(); // Uuden listan luominen
-                lines2 = File.ReadAllLines(formConfig).ToList(); // Lue koko tiedosto ja lisää se listaan
-
-                lines2[1] = "dateTime = " + date.ToString("dd/MM/yyyy");
-                File.WriteAllLines(formConfig, lines2); // Päivitä tiedosto listan sisällöllä
-
-                //MessageBox.Show("Myynti onnistui!", appName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-                PlayCoinSound();
-            }
-        }
-
-        // Salli vain numeroita tekstilaatikon syötteeksi
-        private void tekstiLaatikko_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
-            (e.KeyChar != '.'))
-            {
-                e.Handled = true;
-            }
-            if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
-            {
-                e.Handled = true;
+                MakeASellEvent();
             }
         }
 
@@ -222,28 +137,7 @@ namespace Bitcoin_Sovellus
 
             if (fileDialog.ShowDialog() == DialogResult.OK)
             {
-                directoryPath = fileDialog.InitialDirectory + fileDialog.FileName;
-
-                if (!File.Exists(fileDialog.FileName)) // Jos tiedostoa ei ole olemassa
-                {
-                    File.Create(fileDialog.FileName).Close(); // Luo uusi tiedosto
-                }
-                /* else // Jos tiedosto on olemassa
-                {
-                    // Tee jotain
-                } */
-
-                // Päivitä config-tiedosto
-                DateTime date = DateTime.Now;
-
-                formConfig = formMainFolder + @"\config.txt";
-
-                List<string> lines = new List<string>(); // Uuden listan luominen
-                lines = File.ReadAllLines(formConfig).ToList(); // Lue koko tiedosto ja lisää se listaan
-
-                lines[0] = "directoryPath = " + directoryPath;
-                lines[1] = "dateTime = " + date.ToString("dd/MM/yyyy");
-                File.WriteAllLines(formConfig, lines); // Päivitä tiedosto listan sisällöllä
+                ChangeFileOrCreateNewIfNone(fileDialog); // Vaihda tiedosto tai luo uusi, jos ei ole
             }
 
             // Päivitä tiedoston sijainti -teksti
@@ -253,7 +147,7 @@ namespace Bitcoin_Sovellus
             }
             else
             {
-                tiedostonSijainti = @"D:\stuff\fileread\bitcoin.txt"; // Myynti- ja ostotietojen normaali tallennussijainti
+                tiedostonSijainti = defaultFileLocation;
             }
 
             tiedostonSijaintiLabel.Text = tiedostonSijainti;
@@ -274,63 +168,39 @@ namespace Bitcoin_Sovellus
             }
         }
 
-        // Lataa tiedot config-tiedostosta
-        private void lataaConfig()
+        // Salli vain numeroita tekstilaatikon syötteeksi
+        private void tekstiLaatikko_KeyPress(object textBox, KeyPressEventArgs keyPressed)
         {
-            formConfig = formMainFolder + @"\config.txt";
-
-            if (File.Exists(formConfig)) // Tarkista löytyykö käyttäjältä config-tiedosto
+            if (!char.IsControl(keyPressed.KeyChar) && !char.IsDigit(keyPressed.KeyChar) && (keyPressed.KeyChar != '.'))
             {
-                List<string> lines = new List<string>(); // Uuden listan luominen
-                lines = File.ReadAllLines(formConfig).ToList(); // Lue koko tiedosto ja lisää se listaan
+                keyPressed.Handled = true;
+            }
+            if ((keyPressed.KeyChar == '.') && ((textBox as TextBox).Text.IndexOf('.') > -1))
+            {
+                keyPressed.Handled = true;
+            }
+        }
+
+        // Lataa tiedot config-tiedostosta
+        private void LataaConfig(string configPath)
+        {
+            if (File.Exists(configPath)) // Tarkista löytyykö käyttäjältä config-tiedosto
+            {
+                List<string> lines = new List<string>();
+                lines = File.ReadAllLines(configPath).ToList();
 
                 if (lines.Count > 0)
                 {
-                    // Lue directory path
-                    if (lines[0] == "directoryPath = null")
-                    {
-                        directoryPath = null;
-                        tiedostonSijainti = @"D:\stuff\fileread\bitcoin.txt"; // Myynti- ja ostotietojen normaali tallennussijainti
-                    }
-                    else if (lines[0].Contains("directoryPath ="))
-                    {
-                        string lines0 = lines[0];
-                        try
-                        {
-                            directoryPath = lines0.Substring(16);
-                            tiedostonSijainti = directoryPath;
-                        }
-                        catch (Exception err)
-                        {
-                            Console.WriteLine(lines0 + " >>>" + err + "<<<");
-                        }
-                    }
+                    ReadConfigDirectoryPath(lines); // Lue directory path
+                    ReadConfigDateTime(lines); // Lue date time
 
                     tiedostonSijaintiLabel.Text = tiedostonSijainti;
-
-                    // Lue date time
-                    if (lines[1] == "dateTime = null")
-                    {
-                        kaytitViimeksiDownLabel.Text = "";
-                    }
-                    else if (lines[1].Contains("dateTime ="))
-                    {
-                        string lines1 = lines[1];
-                        try
-                        {
-                            kaytitViimeksiDownLabel.Text = lines1.Substring(11);
-                        }
-                        catch (Exception err)
-                        {
-                            Console.WriteLine(lines1 + " >>>" + err + "<<<");
-                        }
-                    }
                 }
             }
         }
 
         // Lue viimeisin tapahtuma käyttäjän tekstitiedostosta
-        void viimeisinTapahtuma()
+        void ViimeisinTapahtuma()
         {
             List<string> lines = new List<string>(); // Uuden listan luominen
 
@@ -351,7 +221,7 @@ namespace Bitcoin_Sovellus
         }
 
         // Bitcoin API
-        void bitcoinApi()
+        void HaeBitcoininHinta()
         {
             string response, value;
 
@@ -382,6 +252,149 @@ namespace Bitcoin_Sovellus
         {
             SoundPlayer sp = new SoundPlayer(formMainFolder + @"\SuperMarioCoinSound.wav");
             sp.Play();
+        }
+
+        void ClearConfig(string configPath, List<string> configData, bool causedByError)
+        {
+            if (configData.Count > 0)
+            {
+                configData.Clear();
+            }
+            configData.Add("directoryPath = null");
+            configData.Add("dateTime = null");
+            File.WriteAllLines(configPath, configData); // Päivitä tiedosto listan sisällöllä
+            if (causedByError)
+            {
+                MessageBox.Show("Config-tiedosto resetoitiin, koska se ei toiminut kunnolla.", appName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        void UpdateConfig(string configPath, string directoryPath)
+        {
+            DateTime date = DateTime.Now;
+
+            List<string> lines = new List<string>();
+            lines = File.ReadAllLines(configPath).ToList();
+
+            lines[0] = "directoryPath = " + directoryPath;
+            lines[1] = "dateTime = " + date.ToString("dd/MM/yyyy");
+            File.WriteAllLines(configPath, lines); // Päivitä tiedosto listan sisällöllä
+        }
+
+        void UpdateConfigDateTime(string configPath, DateTime date)
+        {
+            List<string> lines = File.ReadAllLines(configPath).ToList();
+
+            lines[1] = "dateTime = " + date.ToString("dd/MM/yyyy");
+            File.WriteAllLines(configPath, lines);
+        }
+
+        void ReadConfigDateTime(List<string> configData)
+        {
+            if (configData[1] == "dateTime = null")
+            {
+                kaytitViimeksiDownLabel.Text = "";
+            }
+            else if (configData[1].Contains("dateTime ="))
+            {
+                string readDateTime = configData[1];
+
+                try
+                {
+                    kaytitViimeksiDownLabel.Text = readDateTime.Substring(11);
+                }
+                catch (Exception err)
+                {
+                    Console.WriteLine(readDateTime + " >>>" + err + "<<<");
+                }
+            }
+        }
+
+        void ReadConfigDirectoryPath(List<string> configData)
+        {
+            if (configData[0] == "directoryPath = null")
+            {
+                directoryPath = null;
+                tiedostonSijainti = defaultFileLocation;
+            }
+            else if (configData[0].Contains("directoryPath ="))
+            {
+                string readDirectoryPath = configData[0];
+
+                try
+                {
+                    directoryPath = readDirectoryPath.Substring(16);
+                    tiedostonSijainti = directoryPath;
+                }
+                catch (Exception err)
+                {
+                    Console.WriteLine(readDirectoryPath + " >>>" + err + "<<<");
+                }
+            }
+        }
+
+        void ChangeFileOrCreateNewIfNone(OpenFileDialog fileDialog)
+        {
+            directoryPath = fileDialog.InitialDirectory + fileDialog.FileName;
+
+            if (!File.Exists(fileDialog.FileName)) // Jos tiedostoa ei ole olemassa
+            {
+                File.Create(fileDialog.FileName).Close(); // Luo uusi tiedosto
+            }
+
+            UpdateConfig(configPath, directoryPath); // Päivitä config-tiedosto
+        }
+
+        void UpdateFileLocationText(string directoryPath)
+        {
+            if (directoryPath != null)
+            {
+                tiedostonSijainti = directoryPath; // Myynti- ja ostotietojen uusi tallennussijainti
+            }
+            else
+            {
+                tiedostonSijainti = defaultFileLocation; // Myynti- ja ostotietojen normaali tallennussijainti
+            }
+
+            tiedostonSijaintiLabel.Text = tiedostonSijainti;
+        }
+
+        void MakeABuyEvent()
+        {
+            string teksti = tekstiLaatikko.Text, rahaValuutta = rahaValuuttaBox.Text, cryptoValuutta = cryptoValuuttaBox.Text;
+            string fileLocation = tiedostonSijainti; // Tallennettavan tiedoston sijainti
+
+            DateTime date = DateTime.Now; // Määritä tämänhetkinen aika
+
+            List<string> lines = new List<string>();
+            lines = File.ReadAllLines(fileLocation).ToList();
+
+            lines.Add("Ostettu [" + date.ToString("dd/MM/yyyy") + "] (" + cryptoValuutta + "): " + teksti + rahaValuutta + "\n"); // Lisää listaan "Ostettu [_AIKA_] (_CRYPTOVALUUTTA_): _EUROMÄÄRÄ__RAHAVALUUTTA_"
+            File.WriteAllLines(fileLocation, lines);
+
+            UpdateConfigDateTime(configPath, date); // Päivitä config-tiedostoon aika, jolloin tallennus tehtiin
+
+            //MessageBox.Show("Osto onnistui!", appName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+            //PlayCoinSound();
+        }
+
+        void MakeASellEvent()
+        {
+            string teksti = tekstiLaatikko.Text, rahaValuutta = rahaValuuttaBox.Text, cryptoValuutta = cryptoValuuttaBox.Text;
+            string fileLocation = tiedostonSijainti; // Tallennettavan tiedoston sijainti
+
+            DateTime date = DateTime.Now; // Määritä tämänhetkinen aika
+
+            List<string> lines = new List<string>();
+            lines = File.ReadAllLines(fileLocation).ToList();
+
+            lines.Add("Myyty [" + date.ToString("dd/MM/yyyy") + "] (" + cryptoValuutta + "): " + teksti + rahaValuutta + "\n"); // Lisää listaan "Myyty [_AIKA_] (_CRYPTOVALUUTTA_): _EUROMÄÄRÄ__RAHAVALUUTTA_"
+            File.WriteAllLines(fileLocation, lines);
+
+            UpdateConfigDateTime(configPath, date); // Päivitä config-tiedostoon aika, jolloin tallennus tehtiin
+
+            //MessageBox.Show("Myynti onnistui!", appName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+            //PlayCoinSound();
         }
     }
 }
