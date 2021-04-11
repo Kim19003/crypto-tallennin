@@ -140,17 +140,7 @@ namespace Bitcoin_Sovellus
                 ChangeFileOrCreateNewIfNone(fileDialog); // Vaihda tiedosto tai luo uusi, jos ei ole
             }
 
-            // Päivitä tiedoston sijainti -teksti
-            if (directoryPath != null)
-            {
-                tiedostonSijainti = directoryPath; // Myynti- ja ostotietojen uusi tallennussijainti
-            }
-            else
-            {
-                tiedostonSijainti = defaultFileLocation;
-            }
-
-            tiedostonSijaintiLabel.Text = tiedostonSijainti;
+            UpdateFileLocationText(directoryPath); // Päivitä tiedoston sijainti -teksti
         }
 
         private void avaaTiedostoButton_Click(object sender, EventArgs e)
