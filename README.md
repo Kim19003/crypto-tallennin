@@ -8,5 +8,5 @@ Known errors:
 
 Pictures:
 <p align="left">
-  <img src="https://i.imgur.com/sY8fyUY.jpg" width="580" title="Kuva päänäkymästä"><br><br>
+  <img src="https://i.imgur.com/NvH6yh1.jpg" width="580" title="Kuva päänäkymästä"><br><br>
 </p>
